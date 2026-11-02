@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // User Profiles
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Produce Listings
+    match /produce/{produceId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.farmerId == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.farmerId == request.auth.uid;
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      allow read: if request.auth != null && (resource.data.buyerId == request.auth.uid || resource.data.farmerId == request.auth.uid);
+      allow create: if request.auth != null && request.resource.data.buyerId == request.auth.uid;
+      allow update: if request.auth != null && (resource.data.buyerId == request.auth.uid || resource.data.farmerId == request.auth.uid);
+    }
+
+    // Message Threads
+    match /messageThreads/{threadId} {
+      allow read: if request.auth != null && (resource.data.buyerId == request.auth.uid || resource.data.farmerId == request.auth.uid);
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && (resource.data.buyerId == request.auth.uid || resource.data.farmerId == request.auth.uid);
+    }
+
+    // Messages
+    match /messages/{messageId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.senderId == request.auth.uid;
+      allow delete: if request.auth != null && resource.data.senderId == request.auth.uid;
+      // Allow update if user is sender (to edit) or receiver (to mark read/delivered)
+      allow update: if request.auth != null && (resource.data.senderId == request.auth.uid || resource.data.receiverId == request.auth.uid);
+    }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+    }
+  }
+}

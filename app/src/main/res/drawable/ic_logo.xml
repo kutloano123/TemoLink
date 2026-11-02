@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Background Circle -->
+    <path
+        android:fillColor="#003366"
+        android:pathData="M100,100m-90,0a90,90 0,1 1,180 0a90,90 0,1 1,-180 0" />
+    <!-- Leaf 1 -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M100,60c-20,0 -40,20 -40,50c0,20 15,35 35,38l5,-38l5,38c20,-3 35,-18 35,-38c0,-30 -20,-50 -40,-50z" />
+    <!-- Leaf 2 (Light Green) -->
+    <path
+        android:fillColor="#8BC34A"
+        android:pathData="M100,70c-15,0 -30,15 -30,40c0,15 10,25 25,28l5,-28l5,28c15,-3 25,-13 25,-28c0,-25 -15,-40 -30,-40z" />
+    <!-- Text T (Simplified) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M95,120h10v30h-10zM85,120h30v5h-30z" />
+</vector>
